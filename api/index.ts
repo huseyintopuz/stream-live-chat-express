@@ -1,12 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
 import { genSaltSync, hashSync } from "bcrypt";
-import { StreamChat } from "stream-chat";
+// import { StreamChat } from "stream-chat";
 
 dotenv.config();
 
 const { PORT, STREAM_API_KEY, STREAM_API_SECRET } = process.env;
-const serverClient = StreamChat.getInstance(STREAM_API_KEY!, STREAM_API_SECRET);
+// const serverClient = StreamChat.getInstance(STREAM_API_KEY!, STREAM_API_SECRET);
 const app = express();
 app.use(express.json());
 const salt = genSaltSync(10);
@@ -44,14 +44,17 @@ app.post("/register", async (req, res) => {
         }
         USERS.push(newUser);
 
-        await serverClient.upsertUsers([{
-            id,
-            email,
-            name: email,
-        }]);
+        // await serverClient.upsertUsers([{
+        //     id,
+        //     email,
+        //     name: email,
+        // }]);
 
-        const token = serverClient.createToken(id);
-        return res.status(200).json({ token, user: { id, email } });
+        // const token = serverClient.createToken(id);
+        return res.status(200).json({
+            // token, 
+            user: { id, email }
+        });
 
     } catch (err) {
         res.status(500).send({ error: "User already exists" });
@@ -65,8 +68,11 @@ app.post("/login", (req, res) => {
     if (!user || user.hashed_password !== hashed_password) {
         return res.status(400).json({ error: "Invalid username or password" });
     }
-    const token = serverClient.createToken(user.id);
-    return res.status(200).json({ token, user: { id: user.id, email: user.email } });
+    // const token = serverClient.createToken(user.id);
+    return res.status(200).json({
+        // token,
+        user: { id: user.id, email: user.email }
+    });
 });
 
 app.listen(PORT, () => {

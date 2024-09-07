@@ -1,6 +1,0 @@
-{
-  "watch": ["api"],
-  "ext": ".ts,.js",
-  "ignore": [],
-  "exec": "ts-node ./api/index.ts"
-}

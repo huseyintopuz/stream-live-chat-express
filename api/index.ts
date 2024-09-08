@@ -94,7 +94,7 @@ app.post("/login", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Listening and started on port ${PORT}`);
+    console.log(`Listening on port ${PORT}`);
 })
 
 module.exports = app;

@@ -21,12 +21,17 @@ async function getUserByEmail(email: string) {
     const q = query(usersCollectionRef, where("email", "==", email));
     const querySnapshot = await getDocs(q);
     if (!querySnapshot.empty) {
-        const userDoc = querySnapshot.docs[0].data().newUser;
-        return {
-            id: userDoc.id,
-            email: userDoc.email,
-            hashed_password: userDoc.hashed_password,
-        };
+        // Tüm dökümanları map fonksiyonu ile döndür
+        const users = querySnapshot.docs.map(doc => {
+            const userDoc = doc.data().newUser;
+            return {
+                id: doc.id, // `doc.id`'yi kullanarak her belgenin id'sini alın
+                email: userDoc.email,
+                hashed_password: userDoc.hashed_password,
+            };
+        });
+
+        return users;
     }
     return null;
 }

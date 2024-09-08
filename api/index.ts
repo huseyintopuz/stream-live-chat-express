@@ -21,17 +21,12 @@ async function getUserByEmail(email: string) {
     const q = query(usersCollectionRef, where("email", "==", email));
     const querySnapshot = await getDocs(q);
     if (!querySnapshot.empty) {
-        // Tüm dökümanları map fonksiyonu ile döndür
-        const users = querySnapshot.docs.map(doc => {
-            const userDoc = doc.data().newUser;
-            return {
-                id: doc.id, // `doc.id`'yi kullanarak her belgenin id'sini alın
-                email: userDoc.email,
-                hashed_password: userDoc.hashed_password,
-            };
-        });
-
-        return users;
+        const userDoc = querySnapshot.docs[0].data();
+        return {
+            id: userDoc.id,
+            email: userDoc.email,
+            hashed_password: userDoc.hashed_password,
+        };
     }
     return null;
 }
@@ -55,33 +50,33 @@ app.post("/register", async (req, res) => {
         return res.status(400).json({ error: "Password must be at least 8 characters long" });
     }
 
-    const hashed_password = hashSync(password, salt);
-    const id = Math.random().toString(36).slice(2);
-    const newUser = {
-        id, email, hashed_password
+    try {
+        const hashed_password = hashSync(password, salt);
+        const id = Math.random().toString(36).slice(2);
+
+        await addDoc(usersCollectionRef, {
+            id, email, hashed_password
+        });
+        await serverClient.upsertUsers([{
+            id,
+            email,
+            name: email,
+        }]);
+
+        const token = serverClient.createToken(id);
+        return res.status(200).json({
+            token,
+            user: { id, email }
+        });
+
+    } catch (err) {
+        res.status(500).send({ error: "User already exists" });
     }
-
-    await addDoc(usersCollectionRef, {
-        newUser
-    });
-
-    await serverClient.upsertUsers([{
-        id,
-        email,
-        name: email,
-    }]);
-
-    const token = serverClient.createToken(id);
-    return res.status(200).json({
-        token,
-        user: { id, email }
-    });
 });
 
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
     const user = await getUserByEmail(email);
-    console.log(user);
 
     if (!user) {
         return res.status(400).json({ error: "Invalid email" });

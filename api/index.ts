@@ -21,7 +21,7 @@ async function getUserByEmail(email: string) {
     const q = query(usersCollectionRef, where("email", "==", email));
     const querySnapshot = await getDocs(q);
     if (!querySnapshot.empty) {
-        const userDoc = querySnapshot.docs[0].data();
+        const userDoc = querySnapshot.docs[0].data().newUser;
         return {
             id: userDoc.id,
             email: userDoc.email,

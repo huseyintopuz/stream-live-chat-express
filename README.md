@@ -1,4 +1,6 @@
-This project is an API built with Express.js that provides user registration and login functionalities. The application integrates Firebase Firestore for database management,
+This project is an API built with Express.js that provides user registration and login functionalities. 
+
+- The application integrates Firebase Firestore for database management,
 Stream Chat for real-time messaging, and bcryptjs for password hashing.
 
 Technology Stacks

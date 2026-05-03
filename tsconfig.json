@@ -5,10 +5,10 @@
     "rootDir": "./",
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "target": "es6",
+    "target": "es2017",
     "lib": ["dom", "esnext"],
     "moduleResolution": "Node",
     "esModuleInterop": true,
-    "module": "CommonJS"
+    "module": "commonjs"
   }
 }

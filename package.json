@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "ts-node ./api/index.ts",
+    "dev": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -13,6 +15,7 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "firebase": "^10.13.1",
+    "redis": "^5.12.1",
     "stream-chat": "^8.40.2"
   },
   "devDependencies": {

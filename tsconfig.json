@@ -6,10 +6,10 @@
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "target": "es2017",
-    "lib": ["dom", "esnext"],
-    "moduleResolution": "Node",
+    "lib": ["es2017"],
+    "moduleResolution": "NodeNext",
     "esModuleInterop": true,
-    "module": "commonjs",
+    "module": "NodeNext",
     "skipLibCheck": true
   }
 }

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node ./api/index.ts",
     "dev": "nodemon",
-    "build": "tsc",
+    "build": "tsc && mkdir -p public",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

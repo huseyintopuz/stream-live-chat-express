@@ -20,12 +20,16 @@ app.use("/", authRoutes);
 
 const startServer = async () => {
     try {
-        await redis.connect();
-        console.log("Connected to Redis");
+        if (!redis.isOpen) {
+            await redis.connect();
+            console.log("Connected to Redis");
+        }
         
-        app.listen(PORT, () => {
-            console.log(`Listening on port ${PORT}`);
-        });
+        if (process.env.NODE_ENV !== "production") {
+            app.listen(PORT, () => {
+                console.log(`Listening on port ${PORT}`);
+            });
+        }
     } catch (err) {
         console.error("Failed to connect to Redis:", err);
     }

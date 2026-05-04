@@ -9,6 +9,7 @@
     "lib": ["dom", "esnext"],
     "moduleResolution": "Node",
     "esModuleInterop": true,
-    "module": "commonjs"
+    "module": "commonjs",
+    "skipLibCheck": true
   }
 }
